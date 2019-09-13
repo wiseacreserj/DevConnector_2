@@ -6,6 +6,7 @@ import Spinner from "../layout/Spinner";
 import { getPost } from "../../actions/post";
 import PostItem from "../posts/PostItem";
 import CommentForm from "./CommentForm";
+import CommentItem from "./CommentItem";
 
 const Post = ({ post: { post, loading }, getPost, match }) => {
   useEffect(() => {
@@ -20,7 +21,11 @@ const Post = ({ post: { post, loading }, getPost, match }) => {
         Back To Posts
       </Link>
       <PostItem post={post} showActions={false} />
-
+        <div className="commente">
+        {post.comments.map(comment => (
+            <CommentItem key={comment._id} comment={comment} postId={post._id} />
+        ))}
+        </div>
       <CommentForm postId={post._id} />
     </Fragment>
   );
@@ -28,7 +33,7 @@ const Post = ({ post: { post, loading }, getPost, match }) => {
 
 Post.propTypes = {
   getPost: PropTypes.func.isRequired,
-  post: PropTypes.func.isRequired
+  post: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
